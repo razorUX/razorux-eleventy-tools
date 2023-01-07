@@ -50,7 +50,7 @@ function youtubeEmbed(id, options) {
 }
 
 
-async function imageShortcode({src, alt, widths, cssSizes, cssClass = "", style = "", hasTransparency = false, attributes = {}, remote = false}) {
+async function imageEmbed({src, alt, widths, cssSizes, cssClass = "", style = "", hasTransparency = false, attributes = {}, remote = false}) {
 	if(src === undefined) return "";
 
 	const formats = hasTransparency ? ['avif', 'webp', 'png' ] : ['avif', 'webp', 'jpg', ]
@@ -129,10 +129,75 @@ function formatDollars(n) {
 	return formatter.format(n)
 }
 
+
+const isDefined = (o) => !(!o);
+
+const VIDEO_EVENTS = 'audioprocess canplay canplaythrough complete durationchange emptied ended error loadeddata loadedmetadata pause play playing progress ratechange seeked seeking stalled suspend timeupdate volumechange waiting'.split(' ');
+
+function videoEmbed({
+		src,
+		mp4Src,
+		webmSrc,
+		posterSrc, // Becomes `poster`
+		id,
+		height,
+		width,
+		cssClasses,
+		styles,
+		playsinline = false,
+		autoplay = false,
+		muted = true,
+		loop = false,
+		controls = true,
+		controlslist = '', // nodownload | nofullscreen | noremoteplayback
+		crossorigin = 'anonymous', // anonymous | use-credentials
+		autopictureinpicture = false,
+		disablepictureinpicture = false,
+		disableremoteplayback = false,
+		preload = 'auto', // none | metadata | auto
+		listeners = [],
+		attrInject = ""
+	}) {
+
+	 const idStr = id ? `id="${id}"` : "";
+	 const srcAttr = src ? `src="${src}"` : '';
+	 const webM = webmSrc ? `<source src="${webmSrc}" type="video/webm">` : '';
+	 const mp4 = mp4Src ? `<source src="${mp4Src}" type="video/mp4">` : '';
+	 const poster = posterSrc ? `poster="${posterSrc}"` : '';
+	 const cssString = cssClasses ? `class="${cssClasses}"` : '';
+	 const webkitAirplayDisabled = disableremoteplayback ? `x-webkit-airplay="deny"` : '';
+	 const loopFn = loop ? "onended='function(){  this.load(); this.play();}'" : "";
+
+	 const simpleAttrs = {
+		 muted,
+		 loop,
+		 controls,
+		 playsinline,
+		 autoplay,
+		 autopictureinpicture,
+		 disablepictureinpicture,
+		 disableremoteplayback
+	 }
+
+	 const attrString = Object.entries(simpleAttrs).map(([key, value]) => {
+		 if(value) return key;
+	 }).filter(isDefined).join(' ');
+
+	 console.log(attrString);
+
+	return `
+		<video ${idStr} ${srcAttr} ${poster} ${attrString} ${loopFn} ${webkitAirplayDisabled} ${cssString} ${attrInject}>
+			${webM}
+			${mp4}
+		</video>
+	`
+}
+
 exports.jsonEmbed = jsonEmbed;
 exports.envEmbed = envEmbed;
 exports.youtubeEmbed = youtubeEmbed;
-exports.imageShortcode = imageShortcode;
+exports.videoEmbed = videoEmbed;
+exports.imageEmbed = imageEmbed;
 exports.getEleventyImage = getEleventyImage;
 exports.fathomTrackClick = fathomTrackClick;
 exports.linkShortcode = link;

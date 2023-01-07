@@ -1,64 +1,64 @@
-# razorUX JS Utils
-[![CI](https://github.com/razorUX/razorux-js-utils/actions/workflows/test.yml/badge.svg)](https://github.com/razorUX/razorux-js-utils/actions/workflows/test.yml)
-[![npm version](https://badge.fury.io/js/razorux-js-utils.svg)](https://badge.fury.io/js/razorux-js-utils)
-
-## Installation
+# razorUX Eleventy Tools
+[![CI](https://github.com/razorUX/razorux-eleventy-tools/actions/workflows/test.yml/badge.svg)](https://github.com/razorUX/razorux-eleventy-tools/actions/workflows/test.yml)
+[![npm version](https://badge.fury.io/js/razorux-eleventy-tools.svg)](https://badge.fury.io/js/razorux-eleventy-tools)
 
 ```
-npm install razorux-js-utils
+npm install razorux-eleventy-tools
 ```
+
 
 ## Included functions
 
 ```js
-loadEnvVars(filePath);
-validateEnvVars([ ENV_VAR ]);
-
-readCsvFile(path);
-writeCsvFile(data, path);
-
-readTextFile(path);
-
-ensureDirExists(path);
-
-readJsonFile(path);
-writeJsonFile(data, path);
-
-normalizeToken(string);
-
-dollarsToCents(number);
-centsToDollars(number);
-
-invokeMethod(Function);
-
-
-pipe(<Array Function>);
-map(Array, Function);
-
-clone(Object)
-
-asyncMap(Array, Function);
-asyncForEach(Array, Function);
-
-sendSlackNotification,
-getCloudWatchLogDeeplink()
-sendErrorNotification,
-
-simpleHash(Any)
-
-sleep(number) // (milliseconds)
-
-parseBoolean(String);
-
-retryable({fn, retryCount = 3, retryTimeoutMs = 300, addRandomDelay = true});
-
-validateJson(json, requiredPaths);
-
-createErrorType(name, suppressErrorNotification);
-
-enableConsoleLogging();
-disableConsoleLogging();
+link // Sophisticated shortcode for creating HTML links
+jsonEmbed // Embed JSON objects into your Elevety pages
+envEmbed // Embed environment variables
+youtubeEmbed // Embed YouTube videos
+videoEmbed // Embed HTML5 video
+imageEmbed // Embed optimized images
+getEleventyImage // Generate 11ty images
+fathomTrackClick // Track clicks with Fathom Analytics
+formatDollars // Display prices in US dollars
 ```
+
+## Installation
+
+```
+npm install razorux-eleventy-tools
+```
+
+Then, in `.eleventy.js` import the functions you want:
+
+```js
+const {
+	jsonEmbed,
+	envEmbed,
+	youtubeEmbed,
+	imageEmbed,
+	videoEmbed,
+	fathomTrackClick,
+	link,
+	formatDollars
+} = require('../src/main')
+```
+
+And then install the plugins you'd like:
+
+```js
+module.exports = function (eleventyConfig) {
+	// ...
+	
+	eleventyConfig.addNunjucksShortcode("json",jsonEmbed);
+	eleventyConfig.addNunjucksShortcode("env", envEmbed);
+	eleventyConfig.addNunjucksShortcode("youtube",youtubeEmbed);
+	eleventyConfig.addNunjucksAsyncShortcode("image", imageEmbed);
+	eleventyConfig.addNunjucksAsyncShortcode("video", videoEmbed);
+	eleventyConfig.addPairedNunjucksShortcode("link", link);
+	eleventyConfig.addNunjucksShortcode("fathomTrackClick", fathomTrackClick);
+	// ...
+}
+```
+
 
 ## Thank You
 
