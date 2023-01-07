@@ -200,5 +200,5 @@ exports.videoEmbed = videoEmbed;
 exports.imageEmbed = imageEmbed;
 exports.getEleventyImage = getEleventyImage;
 exports.fathomTrackClick = fathomTrackClick;
-exports.linkShortcode = link;
+exports.link = link;
 exports.formatDollars = formatDollars;

@@ -39,7 +39,7 @@ const {
 	fathomTrackClick,
 	link,
 	formatDollars
-} = require('../src/main')
+} = require('razorux-eleventy-tools');
 ```
 
 And then install the plugins you'd like:
