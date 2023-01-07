@@ -53,8 +53,16 @@ module.exports = function (eleventyConfig) {
 	eleventyConfig.addNunjucksShortcode("youtube",youtubeEmbed);
 	eleventyConfig.addNunjucksAsyncShortcode("image", imageEmbed);
 	eleventyConfig.addNunjucksAsyncShortcode("video", videoEmbed);
-	eleventyConfig.addPairedNunjucksShortcode("link", link);
 	eleventyConfig.addNunjucksShortcode("fathomTrackClick", fathomTrackClick);
+	
+	eleventyConfig.addPairedNunjucksShortcode("link", link()); // Note that `link` is a constructor where you can pass arguments
+	
+	// Adding an object of FathomIds, for example:
+	eleventyConfig.addPairedNunjucksShortcode("link", link({
+		fathomIds: {
+			HeroCTA: "AHJKSWUABKA"
+		}
+		));
 	// ...
 }
 ```

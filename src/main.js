@@ -98,10 +98,10 @@ function fathomTrackClick(eventId) {
 	return `onclick="window?.fathom?.trackGoal('${eventId}', 0);"`;
 }
 
-function link(content, { url, label = "", ariaLabel = "", cssClasses = "", inlineStyles = "", attributes = "", openInNewTab = false, download = false, protectFromScrapers = false, fathomClickId }) {
+
+const  link = ({ fathomIds }) => (content, { url, label = "", ariaLabel = "", cssClasses = "", inlineStyles = "", attributes = "", openInNewTab = false, download = false, protectFromScrapers = false, fathomClickId }) => {
 	
-	const fathomIds = process.env.FATHOM_IDS;
-	if(fathomClickId && !fathomIds) console.error(`Unable to add Fathom click event ${fathomClickId} as the FATHOM_IDS env var is empty.`)
+	if(fathomClickId && !fathomIds) console.error(`Unable to add Fathom click event ${fathomClickId} as no fathomIds were provided. Please configure Fathom Ids in the plugin constructor.`)
 	
 	const fathomClickHandler = fathomClickId ? `onclick="window?.fathom?.trackGoal('${fathomIds[fathomClickId]}', 0);"` : '';
 	const openInNewTabAttribute = openInNewTab ? "target='_blank' noopener" : "";
